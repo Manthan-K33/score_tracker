@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏆 Score Tracker v4.3</title>
+    <title>🏆 Score Tracker v4.3.1</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -14,6 +14,10 @@
     <div class="container">
 
         <h1>🏆 Score Tracker</h1>
+
+        <h2 id="welcomeMessage">
+            Welcome 👋
+        </h2>
 
         <input
             id="playerName"
@@ -43,31 +47,112 @@
 
         <h2 id="message"></h2>
 
-        <!-- Stats -->
+        <!-- Current Time -->
 
         <div class="card">
+
+            <h3>🕒 Current Time</h3>
+
+            <p id="currentTime"></p>
+
+        </div>
+
+        <!-- Best Score -->
+
+        <div class="card">
+
             <h3>🏆 Best Score</h3>
+
             <p id="bestScore">0</p>
+
         </div>
 
+        <!-- Last Score -->
+
         <div class="card">
+
+            <h3>🎯 Last Score</h3>
+
+            <p id="lastScore">0</p>
+
+        </div>
+
+        <!-- Last Played -->
+
+        <div class="card">
+
+            <h3>📅 Last Played</h3>
+
+            <p id="lastPlayed">Never</p>
+
+        </div>
+
+        <!-- Player -->
+
+        <div class="card">
+
             <h3>👤 Player</h3>
+
             <p id="savedPlayer">None</p>
+
         </div>
 
+        <!-- Games Played -->
+
         <div class="card">
+
             <h3>🎮 Games Played</h3>
+
             <p id="gamesPlayed">0</p>
+
         </div>
 
+        <!-- Streak -->
+
         <div class="card">
+
             <h3>🔥 Current Streak</h3>
+
             <p id="streak">0</p>
+
         </div>
 
+        <!-- Highest Rank -->
+
         <div class="card">
+
             <h3>👑 Highest Rank</h3>
+
             <p id="highestRank">None</p>
+
+        </div>
+
+        <!-- Statistics -->
+
+        <div class="card">
+
+            <h3>📊 Statistics</h3>
+
+            <p>
+                Highest Score:
+                <span id="statHighest">0</span>
+            </p>
+
+            <p>
+                Lowest Score:
+                <span id="statLowest">0</span>
+            </p>
+
+            <p>
+                Average Score:
+                <span id="statAverage">0</span>
+            </p>
+
+            <p>
+                Total Scores:
+                <span id="statTotal">0</span>
+            </p>
+
         </div>
 
         <!-- Progress -->
@@ -104,7 +189,13 @@
 
             <h3>🏆 Top 10 Scores</h3>
 
-            <ol id="leaderboard"></ol>
+            <ol id="leaderboard">
+
+                <li id="emptyLeaderboard">
+                    No scores yet. Play your first game!
+                </li>
+
+            </ol>
 
         </div>
 
@@ -114,7 +205,13 @@
 
             <h3>📜 Score History</h3>
 
-            <ul id="historyList"></ul>
+            <ul id="historyList">
+
+                <li id="emptyHistory">
+                    No score history available.
+                </li>
+
+            </ul>
 
             <button onclick="clearHistory()">
                 Clear History
@@ -124,7 +221,7 @@
 
     </div>
 
-    <!-- Popup Notification -->
+    <!-- Achievement Popup -->
 
     <div id="popup" class="popup">
 

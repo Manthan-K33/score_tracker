@@ -13,6 +13,17 @@ let streak =
 let highestRank =
     localStorage.getItem("highestRank") || "None";
 
+let lastScore =
+    Number(localStorage.getItem("lastScore")) || 0;
+
+let lastPlayed =
+    localStorage.getItem("lastPlayed") || "Never";
+
+let unlockedRanks =
+    JSON.parse(
+        localStorage.getItem("unlockedRanks")
+    ) || [];
+
 let scoreHistory =
     JSON.parse(
         localStorage.getItem("scoreHistory")
@@ -23,10 +34,36 @@ document.getElementById("savedPlayer").innerText = player;
 document.getElementById("gamesPlayed").innerText = gamesPlayed;
 document.getElementById("streak").innerText = streak;
 document.getElementById("highestRank").innerText = highestRank;
+document.getElementById("lastScore").innerText = lastScore;
+document.getElementById("lastPlayed").innerText = lastPlayed;
+
+document.getElementById("welcomeMessage").innerText =
+    player !== "None"
+        ? `Welcome back, ${player} 👋`
+        : "Welcome 👋";
+
+document.getElementById("playerName").focus();
 
 renderHistory();
 renderLeaderboard();
 updateProgress(best);
+updateStatistics();
+startClock();
+
+function startClock() {
+
+    updateClock();
+
+    setInterval(updateClock, 1000);
+}
+
+function updateClock() {
+
+    document.getElementById(
+        "currentTime"
+    ).innerText =
+        new Date().toLocaleString();
+}
 
 function handleNameEnter(event) {
 
@@ -68,6 +105,8 @@ function saveScore() {
 
         nameInput.value = name;
 
+        player = name;
+
         localStorage.setItem(
             "playerName",
             name
@@ -76,26 +115,52 @@ function saveScore() {
         document.getElementById(
             "savedPlayer"
         ).innerText = name;
+
+        document.getElementById(
+            "welcomeMessage"
+        ).innerText =
+            `Welcome back, ${name} 👋`;
     }
 
-    if (isNaN(score)) {
+    if (isNaN(score) || score < 0) {
 
         score = 0;
     }
 
-    if (score < 0) {
+    if (score > 100000) {
 
-        score = 0;
+        score = 100000;
     }
 
-    scoreInput.value = score;
+    const now =
+        new Date().toLocaleString();
+
+    lastScore = score;
+    lastPlayed = now;
+
+    localStorage.setItem(
+        "lastScore",
+        score
+    );
+
+    localStorage.setItem(
+        "lastPlayed",
+        now
+    );
+
+    document.getElementById(
+        "lastScore"
+    ).innerText = score;
+
+    document.getElementById(
+        "lastPlayed"
+    ).innerText = now;
 
     const entry = {
 
         score: score,
 
-        date:
-            new Date().toLocaleString()
+        date: now
     };
 
     scoreHistory.push(entry);
@@ -123,6 +188,9 @@ function saveScore() {
 
     if (score > best) {
 
+        const improvement =
+            score - best;
+
         best = score;
 
         localStorage.setItem(
@@ -146,7 +214,7 @@ function saveScore() {
         ).innerText = streak;
 
         message =
-            "🎉 New Personal Best!";
+            `🎉 New Personal Best! (+${improvement})`;
 
         showPopup(
             "🏆 New Record!"
@@ -205,27 +273,23 @@ function saveScore() {
     ).innerHTML =
         achievements
         .map(
-            achievement =>
-            `<li>${achievement}</li>`
+            a => `<li>${a}</li>`
         )
         .join("");
 
     if (
-        currentRank !== "None"
+        currentRank !== "None" &&
+        !unlockedRanks.includes(currentRank)
     ) {
 
-        highestRank =
-            currentRank;
-
-        localStorage.setItem(
-            "highestRank",
-            highestRank
+        unlockedRanks.push(
+            currentRank
         );
 
-        document.getElementById(
-            "highestRank"
-        ).innerText =
-            highestRank;
+        localStorage.setItem(
+            "unlockedRanks",
+            JSON.stringify(unlockedRanks)
+        );
 
         showPopup(
             currentRank +
@@ -233,12 +297,27 @@ function saveScore() {
         );
     }
 
+    highestRank = currentRank;
+
+    localStorage.setItem(
+        "highestRank",
+        highestRank
+    );
+
+    document.getElementById(
+        "highestRank"
+    ).innerText =
+        highestRank;
+
     updateProgress(score);
+    updateStatistics();
 
     document.getElementById(
         "message"
     ).innerText =
         message || "Score Saved";
+
+    scoreInput.value = 0;
 }
 
 function updateProgress(score) {
@@ -246,27 +325,19 @@ function updateProgress(score) {
     let maxScore = 10;
     let nextRank = "🥉 Beginner";
 
-    if (
-        score >= 10 &&
-        score < 50
-    ) {
+    if (score >= 10 && score < 50) {
 
         maxScore = 50;
         nextRank = "🥈 Skilled";
     }
 
-    else if (
-        score >= 50 &&
-        score < 100
-    ) {
+    else if (score >= 50 && score < 100) {
 
         maxScore = 100;
         nextRank = "🥇 Master";
     }
 
-    else if (
-        score >= 100
-    ) {
+    else if (score >= 100) {
 
         maxScore = 100;
         nextRank = "🏆 Max Rank";
@@ -292,42 +363,51 @@ function updateProgress(score) {
 
 function renderHistory() {
 
-    document.getElementById(
-        "historyList"
-    ).innerHTML =
+    const history =
+        document.getElementById(
+            "historyList"
+        );
 
+    if (scoreHistory.length === 0) {
+
+        history.innerHTML =
+            "<li>No score history available.</li>";
+
+        return;
+    }
+
+    history.innerHTML =
         scoreHistory
         .slice()
         .reverse()
         .map(item =>
-
-            `<li>
-                ${item.score}
-                - 
-                ${item.date}
-            </li>`
-
+            `<li>${item.score} - ${item.date}</li>`
         )
         .join("");
 }
 
 function renderLeaderboard() {
 
-    const topScores =
+    const leaderboard =
+        document.getElementById(
+            "leaderboard"
+        );
 
+    const topScores =
         scoreHistory
-        .map(
-            item => item.score
-        )
-        .sort(
-            (a, b) => b - a
-        )
+        .map(item => item.score)
+        .sort((a, b) => b - a)
         .slice(0, 10);
 
-    document.getElementById(
-        "leaderboard"
-    ).innerHTML =
+    if (topScores.length === 0) {
 
+        leaderboard.innerHTML =
+            "<li>No scores yet. Play your first game!</li>";
+
+        return;
+    }
+
+    leaderboard.innerHTML =
         topScores
         .map((score, index) => {
 
@@ -345,6 +425,43 @@ function renderLeaderboard() {
         .join("");
 }
 
+function updateStatistics() {
+
+    if (scoreHistory.length === 0) {
+
+        document.getElementById("statHighest").innerText = 0;
+        document.getElementById("statLowest").innerText = 0;
+        document.getElementById("statAverage").innerText = 0;
+        document.getElementById("statTotal").innerText = 0;
+
+        return;
+    }
+
+    const scores =
+        scoreHistory.map(
+            item => item.score
+        );
+
+    const highest =
+        Math.max(...scores);
+
+    const lowest =
+        Math.min(...scores);
+
+    const average =
+        (
+            scores.reduce(
+                (a, b) => a + b,
+                0
+            ) / scores.length
+        ).toFixed(1);
+
+    document.getElementById("statHighest").innerText = highest;
+    document.getElementById("statLowest").innerText = lowest;
+    document.getElementById("statAverage").innerText = average;
+    document.getElementById("statTotal").innerText = scores.length;
+}
+
 function showPopup(text) {
 
     const popup =
@@ -354,9 +471,7 @@ function showPopup(text) {
 
     popup.innerText = text;
 
-    popup.classList.add(
-        "show"
-    );
+    popup.classList.add("show");
 
     setTimeout(() => {
 
@@ -369,13 +484,13 @@ function showPopup(text) {
 
 function clearHistory() {
 
-    const confirmed =
-
-        confirm(
+    if (
+        !confirm(
             "Delete all score history?"
-        );
-
-    if (!confirmed) return;
+        )
+    ) {
+        return;
+    }
 
     scoreHistory = [];
 
@@ -386,16 +501,16 @@ function clearHistory() {
 
     renderHistory();
     renderLeaderboard();
+    updateStatistics();
 }
 
 function resetData() {
 
-    const confirmed =
+    if (
         confirm(
             "Are you sure you want to reset all saved data?"
-        );
-
-    if (confirmed) {
+        )
+    ) {
 
         localStorage.clear();
 
