@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Score Tracker</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>🏆 Score Tracker</h1>
+
+    <input
+        id="playerName"
+        type="text"
+        placeholder="Your Name"
+    >
+
+    <input
+        id="scoreInput"
+        type="number"
+        placeholder="Enter Score"
+    >
+
+    <br><br>
+
+    <button onclick="saveScore()">
+        Save Score
+    </button>
+
+    <button onclick="resetData()">
+        Reset
+    </button>
+
+    <h2 id="message"></h2>
+
+    <h3>
+        Best Score:
+        <span id="bestScore">0</span>
+    </h3>
+
+    <h3>
+        Player:
+        <span id="savedPlayer">None</span>
+    </h3>
+
+    <h3>🏅 Achievements</h3>
+
+    <ul id="achievementList"></ul>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
