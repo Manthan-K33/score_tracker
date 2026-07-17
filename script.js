@@ -13,12 +13,19 @@ let streak =
 let highestRank =
     localStorage.getItem("highestRank") || "None";
 
+let scoreHistory =
+    JSON.parse(
+        localStorage.getItem("scoreHistory")
+    ) || [];
+
 document.getElementById("bestScore").innerText = best;
 document.getElementById("savedPlayer").innerText = player;
 document.getElementById("gamesPlayed").innerText = gamesPlayed;
 document.getElementById("streak").innerText = streak;
 document.getElementById("highestRank").innerText = highestRank;
 
+renderHistory();
+renderLeaderboard();
 updateProgress(best);
 
 function handleNameEnter(event) {
@@ -82,6 +89,24 @@ function saveScore() {
     }
 
     scoreInput.value = score;
+
+    const entry = {
+
+        score: score,
+
+        date:
+            new Date().toLocaleString()
+    };
+
+    scoreHistory.push(entry);
+
+    localStorage.setItem(
+        "scoreHistory",
+        JSON.stringify(scoreHistory)
+    );
+
+    renderHistory();
+    renderLeaderboard();
 
     gamesPlayed++;
 
@@ -265,6 +290,61 @@ function updateProgress(score) {
         nextRank;
 }
 
+function renderHistory() {
+
+    document.getElementById(
+        "historyList"
+    ).innerHTML =
+
+        scoreHistory
+        .slice()
+        .reverse()
+        .map(item =>
+
+            `<li>
+                ${item.score}
+                - 
+                ${item.date}
+            </li>`
+
+        )
+        .join("");
+}
+
+function renderLeaderboard() {
+
+    const topScores =
+
+        scoreHistory
+        .map(
+            item => item.score
+        )
+        .sort(
+            (a, b) => b - a
+        )
+        .slice(0, 10);
+
+    document.getElementById(
+        "leaderboard"
+    ).innerHTML =
+
+        topScores
+        .map((score, index) => {
+
+            if (index === 0)
+                return `<li>🥇 ${score}</li>`;
+
+            if (index === 1)
+                return `<li>🥈 ${score}</li>`;
+
+            if (index === 2)
+                return `<li>🥉 ${score}</li>`;
+
+            return `<li>${index + 1}. ${score}</li>`;
+        })
+        .join("");
+}
+
 function showPopup(text) {
 
     const popup =
@@ -285,6 +365,27 @@ function showPopup(text) {
         );
 
     }, 3000);
+}
+
+function clearHistory() {
+
+    const confirmed =
+
+        confirm(
+            "Delete all score history?"
+        );
+
+    if (!confirmed) return;
+
+    scoreHistory = [];
+
+    localStorage.setItem(
+        "scoreHistory",
+        JSON.stringify([])
+    );
+
+    renderHistory();
+    renderLeaderboard();
 }
 
 function resetData() {

@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏆 Score Tracker</title>
+    <title>🏆 Score Tracker v4.3</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -18,15 +19,15 @@
             id="playerName"
             type="text"
             placeholder="Enter Your Name"
-            onekeydown="handelNameEnter(event)">
+            onkeydown="handleNameEnter(event)">
 
         <input
             id="scoreInput"
             type="number"
             value="0"
             min="0"
-            placeholder="Enter Your Score">
-            onekeydown="handelNameEnter(event)">
+            placeholder="Enter Your Score"
+            onkeydown="handleScoreEnter(event)">
 
         <div class="button-group">
 
@@ -41,6 +42,8 @@
         </div>
 
         <h2 id="message"></h2>
+
+        <!-- Stats -->
 
         <div class="card">
             <h3>🏆 Best Score</h3>
@@ -67,12 +70,16 @@
             <p id="highestRank">None</p>
         </div>
 
+        <!-- Progress -->
+
         <div class="card">
 
             <h3>📈 Progress To Next Rank</h3>
 
             <div class="progress-container">
+
                 <div id="progressBar"></div>
+
             </div>
 
             <p id="nextRankText">
@@ -80,6 +87,8 @@
             </p>
 
         </div>
+
+        <!-- Achievements -->
 
         <div class="card">
 
@@ -89,10 +98,38 @@
 
         </div>
 
+        <!-- Leaderboard -->
+
+        <div class="card">
+
+            <h3>🏆 Top 10 Scores</h3>
+
+            <ol id="leaderboard"></ol>
+
+        </div>
+
+        <!-- History -->
+
+        <div class="card">
+
+            <h3>📜 Score History</h3>
+
+            <ul id="historyList"></ul>
+
+            <button onclick="clearHistory()">
+                Clear History
+            </button>
+
+        </div>
+
     </div>
 
+    <!-- Popup Notification -->
+
     <div id="popup" class="popup">
+
         Achievement Unlocked!
+
     </div>
 
     <script src="script.js"></script>
