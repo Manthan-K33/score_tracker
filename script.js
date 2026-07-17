@@ -1,20 +1,36 @@
-let best = localStorage.getItem("bestScore") || 0;
-let player = localStorage.getItem("playerName") || "None";
+let best =
+    Number(
+        localStorage.getItem("bestScore")
+    ) || 0;
 
-document.getElementById("bestScore").innerText = best;
-document.getElementById("savedPlayer").innerText = player;
+let player =
+    localStorage.getItem("playerName")
+    || "None";
+
+document.getElementById(
+    "bestScore"
+).innerText = best;
+
+document.getElementById(
+    "savedPlayer"
+).innerText = player;
 
 function saveScore() {
 
     const name =
-        document.getElementById("playerName").value;
+        document.getElementById(
+            "playerName"
+        ).value;
 
     const score =
         Number(
-            document.getElementById("scoreInput").value
+            document.getElementById(
+                "scoreInput"
+            ).value
         );
 
-    if(name){
+    if (name) {
+
         localStorage.setItem(
             "playerName",
             name
@@ -27,7 +43,7 @@ function saveScore() {
 
     let message = "";
 
-    if(score > best){
+    if (score > best) {
 
         best = score;
 
@@ -40,28 +56,41 @@ function saveScore() {
             "bestScore"
         ).innerText = best;
 
-        message += "🎉 New Personal Best! ";
+        message +=
+            "🎉 New Personal Best! ";
     }
 
     const achievements = [];
 
-    if(score >= 10){
-        achievements.push("🥉 Beginner");
+    if (score >= 10) {
+
+        achievements.push(
+            "🥉 Beginner"
+        );
     }
 
-    if(score >= 50){
-        achievements.push("🥈 Skilled");
+    if (score >= 50) {
+
+        achievements.push(
+            "🥈 Skilled"
+        );
     }
 
-    if(score >= 100){
-        achievements.push("🥇 Master");
+    if (score >= 100) {
+
+        achievements.push(
+            "🥇 Master"
+        );
     }
 
     document.getElementById(
         "achievementList"
     ).innerHTML =
         achievements
-        .map(a => `<li>${a}</li>`)
+        .map(
+            achievement =>
+            `<li>${achievement}</li>`
+        )
         .join("");
 
     document.getElementById(
@@ -70,9 +99,16 @@ function saveScore() {
         message || "Score Saved";
 }
 
-function resetData(){
+function resetData() {
 
-    localStorage.clear();
+    if (
+        confirm(
+            "Are you sure you want to reset all data?"
+        )
+    ) {
 
-    location.reload();
+        localStorage.clear();
+
+        location.reload();
+    }
 }

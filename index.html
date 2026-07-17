@@ -1,55 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Score Tracker</title>
+    <title>🏆 Score Tracker</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <h1>🏆 Score Tracker</h1>
+    <div class="container">
 
-    <input
-        id="playerName"
-        type="text"
-        placeholder="Your Name"
-    >
+        <h1>🏆 Score Tracker</h1>
 
-    <input
-        id="scoreInput"
-        type="number"
-        placeholder="Enter Score"
-    >
+        <input
+            id="playerName"
+            type="text"
+            placeholder="Enter Your Name">
 
-    <br><br>
+        <input
+            id="scoreInput"
+            type="number"
+            placeholder="Enter Score">
 
-    <button onclick="saveScore()">
-        Save Score
-    </button>
+        <div>
 
-    <button onclick="resetData()">
-        Reset
-    </button>
+            <button onclick="saveScore()">
+                Save Score
+            </button>
 
-    <h2 id="message"></h2>
+            <button onclick="resetData()">
+                Reset
+            </button>
 
-    <h3>
-        Best Score:
-        <span id="bestScore">0</span>
-    </h3>
+        </div>
 
-    <h3>
-        Player:
-        <span id="savedPlayer">None</span>
-    </h3>
+        <h2 id="message"></h2>
 
-    <h3>🏅 Achievements</h3>
+        <div class="card">
 
-    <ul id="achievementList"></ul>
+            <h3>
+                🏆 Best Score:
+                <span id="bestScore">0</span>
+            </h3>
+
+        </div>
+
+        <div class="card">
+
+            <h3>
+                👤 Player:
+                <span id="savedPlayer">None</span>
+            </h3>
+
+        </div>
+
+        <div class="card">
+
+            <h3>🏅 Achievements</h3>
+
+            <ul id="achievementList"></ul>
+
+        </div>
+
+    </div>
 
     <script src="script.js"></script>
 
 </body>
+
 </html>
