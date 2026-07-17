@@ -15,12 +15,14 @@ document.getElementById(
     "savedPlayer"
 ).innerText = player;
 
+updateProgress(best);
+
 function saveScore() {
 
     const name =
         document.getElementById(
             "playerName"
-        ).value;
+        ).value.trim();
 
     const score =
         Number(
@@ -28,6 +30,10 @@ function saveScore() {
                 "scoreInput"
             ).value
         );
+
+    if (!score && score !== 0) {
+        return;
+    }
 
     if (name) {
 
@@ -56,42 +62,37 @@ function saveScore() {
             "bestScore"
         ).innerText = best;
 
-        message +=
-            "🎉 New Personal Best! ";
+        message =
+            "🎉 New Personal Best!";
     }
 
     const achievements = [];
 
-    if (score >= 10) {
-
+    if (score >= 10)
         achievements.push(
             "🥉 Beginner"
         );
-    }
 
-    if (score >= 50) {
-
+    if (score >= 50)
         achievements.push(
             "🥈 Skilled"
         );
-    }
 
-    if (score >= 100) {
-
+    if (score >= 100)
         achievements.push(
             "🥇 Master"
         );
-    }
 
     document.getElementById(
         "achievementList"
     ).innerHTML =
         achievements
         .map(
-            achievement =>
-            `<li>${achievement}</li>`
+            a => `<li>${a}</li>`
         )
         .join("");
+
+    updateProgress(score);
 
     document.getElementById(
         "message"
@@ -99,13 +100,63 @@ function saveScore() {
         message || "Score Saved";
 }
 
-function resetData() {
+function updateProgress(score) {
+
+    let maxScore = 10;
+    let nextRank = "🥉 Beginner";
 
     if (
+        score >= 10 &&
+        score < 50
+    ) {
+
+        maxScore = 50;
+        nextRank = "🥈 Skilled";
+    }
+
+    else if (
+        score >= 50 &&
+        score < 100
+    ) {
+
+        maxScore = 100;
+        nextRank = "🥇 Master";
+    }
+
+    else if (
+        score >= 100
+    ) {
+
+        maxScore = 100;
+        nextRank = "🏆 Max Rank";
+    }
+
+    const progress =
+        Math.min(
+            (score / maxScore) * 100,
+            100
+        );
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        progress + "%";
+
+    document.getElementById(
+        "nextRankText"
+    ).innerText =
+        "Next Rank: " +
+        nextRank;
+}
+
+function resetData() {
+
+    const confirmed =
         confirm(
             "Are you sure you want to reset all data?"
-        )
-    ) {
+        );
+
+    if (confirmed) {
 
         localStorage.clear();
 

@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🏆 Score Tracker</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -23,9 +22,9 @@
         <input
             id="scoreInput"
             type="number"
-            placeholder="Enter Score">
+            placeholder="Enter Your Score">
 
-        <div>
+        <div class="button-group">
 
             <button onclick="saveScore()">
                 Save Score
@@ -41,19 +40,33 @@
 
         <div class="card">
 
-            <h3>
-                🏆 Best Score:
-                <span id="bestScore">0</span>
-            </h3>
+            <h3>🏆 Best Score</h3>
+
+            <p id="bestScore">0</p>
 
         </div>
 
         <div class="card">
 
-            <h3>
-                👤 Player:
-                <span id="savedPlayer">None</span>
-            </h3>
+            <h3>👤 Player</h3>
+
+            <p id="savedPlayer">None</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>📈 Progress To Next Rank</h3>
+
+            <div class="progress-container">
+
+                <div id="progressBar"></div>
+
+            </div>
+
+            <p id="nextRankText">
+                Reach 10 points for Beginner
+            </p>
 
         </div>
 
