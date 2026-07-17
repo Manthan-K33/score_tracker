@@ -17,12 +17,16 @@
         <input
             id="playerName"
             type="text"
-            placeholder="Enter Your Name">
+            placeholder="Enter Your Name"
+            onekeydown="handelNameEnter(event)">
 
         <input
             id="scoreInput"
             type="number"
+            value="0"
+            min="0"
             placeholder="Enter Your Score">
+            onekeydown="handelNameEnter(event)">
 
         <div class="button-group">
 

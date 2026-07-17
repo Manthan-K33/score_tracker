@@ -21,24 +21,45 @@ document.getElementById("highestRank").innerText = highestRank;
 
 updateProgress(best);
 
+function handleNameEnter(event) {
+
+    if (event.key === "Enter") {
+
+        document
+            .getElementById("scoreInput")
+            .focus();
+    }
+}
+
+function handleScoreEnter(event) {
+
+    if (event.key === "Enter") {
+
+        saveScore();
+    }
+}
+
 function saveScore() {
 
-    const name =
-        document.getElementById("playerName")
-        .value
-        .trim();
+    const nameInput =
+        document.getElementById("playerName");
 
-    const score =
-        Number(
-            document.getElementById("scoreInput")
-            .value
-        );
+    const scoreInput =
+        document.getElementById("scoreInput");
 
-    if (isNaN(score)) {
-        return;
-    }
+    let name =
+        nameInput.value.trim();
 
-    if (name) {
+    let score =
+        Number(scoreInput.value);
+
+    if (name.length > 0) {
+
+        name =
+            name.charAt(0).toUpperCase() +
+            name.slice(1);
+
+        nameInput.value = name;
 
         localStorage.setItem(
             "playerName",
@@ -49,6 +70,18 @@ function saveScore() {
             "savedPlayer"
         ).innerText = name;
     }
+
+    if (isNaN(score)) {
+
+        score = 0;
+    }
+
+    if (score < 0) {
+
+        score = 0;
+    }
+
+    scoreInput.value = score;
 
     gamesPlayed++;
 
@@ -196,6 +229,7 @@ function updateProgress(score) {
         maxScore = 50;
         nextRank = "🥈 Skilled";
     }
+
     else if (
         score >= 50 &&
         score < 100
@@ -204,6 +238,7 @@ function updateProgress(score) {
         maxScore = 100;
         nextRank = "🥇 Master";
     }
+
     else if (
         score >= 100
     ) {
