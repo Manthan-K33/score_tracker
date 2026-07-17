@@ -1,37 +1,40 @@
 let best =
-    Number(
-        localStorage.getItem("bestScore")
-    ) || 0;
+    Number(localStorage.getItem("bestScore")) || 0;
 
 let player =
-    localStorage.getItem("playerName")
-    || "None";
+    localStorage.getItem("playerName") || "None";
 
-document.getElementById(
-    "bestScore"
-).innerText = best;
+let gamesPlayed =
+    Number(localStorage.getItem("gamesPlayed")) || 0;
 
-document.getElementById(
-    "savedPlayer"
-).innerText = player;
+let streak =
+    Number(localStorage.getItem("streak")) || 0;
+
+let highestRank =
+    localStorage.getItem("highestRank") || "None";
+
+document.getElementById("bestScore").innerText = best;
+document.getElementById("savedPlayer").innerText = player;
+document.getElementById("gamesPlayed").innerText = gamesPlayed;
+document.getElementById("streak").innerText = streak;
+document.getElementById("highestRank").innerText = highestRank;
 
 updateProgress(best);
 
 function saveScore() {
 
     const name =
-        document.getElementById(
-            "playerName"
-        ).value.trim();
+        document.getElementById("playerName")
+        .value
+        .trim();
 
     const score =
         Number(
-            document.getElementById(
-                "scoreInput"
-            ).value
+            document.getElementById("scoreInput")
+            .value
         );
 
-    if (!score && score !== 0) {
+    if (isNaN(score)) {
         return;
     }
 
@@ -46,6 +49,17 @@ function saveScore() {
             "savedPlayer"
         ).innerText = name;
     }
+
+    gamesPlayed++;
+
+    localStorage.setItem(
+        "gamesPlayed",
+        gamesPlayed
+    );
+
+    document.getElementById(
+        "gamesPlayed"
+    ).innerText = gamesPlayed;
 
     let message = "";
 
@@ -62,35 +76,104 @@ function saveScore() {
             "bestScore"
         ).innerText = best;
 
+        streak++;
+
+        localStorage.setItem(
+            "streak",
+            streak
+        );
+
+        document.getElementById(
+            "streak"
+        ).innerText = streak;
+
         message =
             "🎉 New Personal Best!";
+
+        showPopup(
+            "🏆 New Record!"
+        );
+    }
+    else {
+
+        streak = 0;
+
+        localStorage.setItem(
+            "streak",
+            streak
+        );
+
+        document.getElementById(
+            "streak"
+        ).innerText = streak;
     }
 
     const achievements = [];
 
-    if (score >= 10)
+    let currentRank = "None";
+
+    if (score >= 10) {
+
         achievements.push(
             "🥉 Beginner"
         );
 
-    if (score >= 50)
+        currentRank =
+            "🥉 Beginner";
+    }
+
+    if (score >= 50) {
+
         achievements.push(
             "🥈 Skilled"
         );
 
-    if (score >= 100)
+        currentRank =
+            "🥈 Skilled";
+    }
+
+    if (score >= 100) {
+
         achievements.push(
             "🥇 Master"
         );
+
+        currentRank =
+            "🥇 Master";
+    }
 
     document.getElementById(
         "achievementList"
     ).innerHTML =
         achievements
         .map(
-            a => `<li>${a}</li>`
+            achievement =>
+            `<li>${achievement}</li>`
         )
         .join("");
+
+    if (
+        currentRank !== "None"
+    ) {
+
+        highestRank =
+            currentRank;
+
+        localStorage.setItem(
+            "highestRank",
+            highestRank
+        );
+
+        document.getElementById(
+            "highestRank"
+        ).innerText =
+            highestRank;
+
+        showPopup(
+            currentRank +
+            " unlocked!"
+        );
+    }
 
     updateProgress(score);
 
@@ -113,7 +196,6 @@ function updateProgress(score) {
         maxScore = 50;
         nextRank = "🥈 Skilled";
     }
-
     else if (
         score >= 50 &&
         score < 100
@@ -122,7 +204,6 @@ function updateProgress(score) {
         maxScore = 100;
         nextRank = "🥇 Master";
     }
-
     else if (
         score >= 100
     ) {
@@ -149,11 +230,33 @@ function updateProgress(score) {
         nextRank;
 }
 
+function showPopup(text) {
+
+    const popup =
+        document.getElementById(
+            "popup"
+        );
+
+    popup.innerText = text;
+
+    popup.classList.add(
+        "show"
+    );
+
+    setTimeout(() => {
+
+        popup.classList.remove(
+            "show"
+        );
+
+    }, 3000);
+}
+
 function resetData() {
 
     const confirmed =
         confirm(
-            "Are you sure you want to reset all data?"
+            "Are you sure you want to reset all saved data?"
         );
 
     if (confirmed) {
