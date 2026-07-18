@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏆 Score Tracker v4.3.1</title>
-
+    <title>🏆 Score Tracker v4.3.2</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -18,6 +17,10 @@
         <h2 id="welcomeMessage">
             Welcome 👋
         </h2>
+
+        <button id="themeToggle" onclick="toggleTheme()">
+            🌙 Dark Mode
+        </button>
 
         <input
             id="playerName"
@@ -43,88 +46,79 @@
                 Reset
             </button>
 
+            <button onclick="exportScores()">
+                ⬇ Export Scores
+            </button>
+
         </div>
 
         <h2 id="message"></h2>
 
-        <!-- Current Time -->
+        <!-- Time -->
 
         <div class="card">
-
             <h3>🕒 Current Time</h3>
-
             <p id="currentTime"></p>
-
         </div>
 
         <!-- Best Score -->
 
         <div class="card">
-
             <h3>🏆 Best Score</h3>
-
             <p id="bestScore">0</p>
 
+            <small id="recordDate">
+                Record Date: Never
+            </small>
         </div>
 
         <!-- Last Score -->
 
         <div class="card">
-
             <h3>🎯 Last Score</h3>
-
             <p id="lastScore">0</p>
-
         </div>
 
         <!-- Last Played -->
 
         <div class="card">
-
             <h3>📅 Last Played</h3>
-
             <p id="lastPlayed">Never</p>
-
         </div>
 
         <!-- Player -->
 
         <div class="card">
-
             <h3>👤 Player</h3>
-
             <p id="savedPlayer">None</p>
-
         </div>
 
         <!-- Games Played -->
 
         <div class="card">
-
             <h3>🎮 Games Played</h3>
-
             <p id="gamesPlayed">0</p>
-
         </div>
 
-        <!-- Streak -->
+        <!-- Current Streak -->
 
         <div class="card">
-
             <h3>🔥 Current Streak</h3>
-
             <p id="streak">0</p>
+        </div>
 
+        <!-- Best Streak -->
+
+        <div class="card">
+            <h3>🔥 Best Streak Ever</h3>
+            <p id="bestStreak">0</p>
         </div>
 
         <!-- Highest Rank -->
 
         <div class="card">
-
             <h3>👑 Highest Rank</h3>
-
             <p id="highestRank">None</p>
-
         </div>
 
         <!-- Statistics -->
@@ -149,6 +143,16 @@
             </p>
 
             <p>
+                Median Score:
+                <span id="statMedian">0</span>
+            </p>
+
+            <p>
+                Last 5 Average:
+                <span id="statLastFive">0</span>
+            </p>
+
+            <p>
                 Total Scores:
                 <span id="statTotal">0</span>
             </p>
@@ -162,14 +166,40 @@
             <h3>📈 Progress To Next Rank</h3>
 
             <div class="progress-container">
-
                 <div id="progressBar"></div>
-
             </div>
+
+            <p id="progressPercent">
+                0%
+            </p>
 
             <p id="nextRankText">
                 Reach 10 points for Beginner
             </p>
+
+        </div>
+
+        <!-- Rank Guide -->
+
+        <div class="card">
+
+            <h3>🏅 Rank Guide</h3>
+
+            <ul>
+
+                <li>🥉 Beginner - 10+</li>
+
+                <li>🥈 Skilled - 50+</li>
+
+                <li>🥇 Master - 100+</li>
+
+                <li>💎 Elite - 250+</li>
+
+                <li>👑 Legend - 500+</li>
+
+                <li>🚀 Champion - 1000+</li>
+
+            </ul>
 
         </div>
 
@@ -221,13 +251,25 @@
 
     </div>
 
-    <!-- Achievement Popup -->
+    <!-- Popup -->
 
     <div id="popup" class="popup">
-
         Achievement Unlocked!
-
     </div>
+
+    <!-- Footer -->
+
+    <footer>
+
+        <p>
+            Score Tracker v4.3.2
+        </p>
+
+        <p>
+            Built by Manthan
+        </p>
+
+    </footer>
 
     <script src="script.js"></script>
 
