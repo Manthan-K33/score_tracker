@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏆 Score Tracker v4.3.2</title>
+    <title>🏆 Score Tracker v4.4</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -64,61 +64,85 @@
         <!-- Best Score -->
 
         <div class="card">
+
             <h3>🏆 Best Score</h3>
+
             <p id="bestScore">0</p>
 
             <small id="recordDate">
                 Record Date: Never
             </small>
+
         </div>
 
         <!-- Last Score -->
 
         <div class="card">
+
             <h3>🎯 Last Score</h3>
+
             <p id="lastScore">0</p>
+
         </div>
 
         <!-- Last Played -->
 
         <div class="card">
+
             <h3>📅 Last Played</h3>
+
             <p id="lastPlayed">Never</p>
+
         </div>
 
         <!-- Player -->
 
         <div class="card">
+
             <h3>👤 Player</h3>
+
             <p id="savedPlayer">None</p>
+
         </div>
 
         <!-- Games Played -->
 
         <div class="card">
+
             <h3>🎮 Games Played</h3>
+
             <p id="gamesPlayed">0</p>
+
         </div>
 
         <!-- Current Streak -->
 
         <div class="card">
+
             <h3>🔥 Current Streak</h3>
+
             <p id="streak">0</p>
+
         </div>
 
         <!-- Best Streak -->
 
         <div class="card">
+
             <h3>🔥 Best Streak Ever</h3>
+
             <p id="bestStreak">0</p>
+
         </div>
 
         <!-- Highest Rank -->
 
         <div class="card">
+
             <h3>👑 Highest Rank</h3>
+
             <p id="highestRank">None</p>
+
         </div>
 
         <!-- Statistics -->
@@ -127,34 +151,50 @@
 
             <h3>📊 Statistics</h3>
 
-            <p>
-                Highest Score:
-                <span id="statHighest">0</span>
+            <p>Highest Score: <span id="statHighest">0</span></p>
+
+            <p>Lowest Score: <span id="statLowest">0</span></p>
+
+            <p>Average Score: <span id="statAverage">0</span></p>
+
+            <p>Median Score: <span id="statMedian">0</span></p>
+
+            <p>Last 5 Average: <span id="statLastFive">0</span></p>
+
+            <p>Total Scores: <span id="statTotal">0</span></p>
+
+        </div>
+
+        <!-- Analytics -->
+
+        <div class="card">
+
+            <h3>📈 Score Analytics</h3>
+
+            <p id="trendIndicator">
+                ➡️ Not enough data yet
             </p>
 
-            <p>
-                Lowest Score:
-                <span id="statLowest">0</span>
+            <p id="performanceRating">
+                🌱 Beginner Player
             </p>
 
-            <p>
-                Average Score:
-                <span id="statAverage">0</span>
-            </p>
+            <canvas id="scoreChart"></canvas>
 
-            <p>
-                Median Score:
-                <span id="statMedian">0</span>
-            </p>
+            <small id="chartStatus">
+                Add scores to generate chart data.
+            </small>
 
-            <p>
-                Last 5 Average:
-                <span id="statLastFive">0</span>
-            </p>
+        </div>
 
-            <p>
-                Total Scores:
-                <span id="statTotal">0</span>
+        <!-- Goal Tracker -->
+
+        <div class="card">
+
+            <h3>🎯 Goal Tracker</h3>
+
+            <p id="goalTracker">
+                Reach 10 points to unlock Beginner.
             </p>
 
         </div>
@@ -188,15 +228,10 @@
             <ul>
 
                 <li>🥉 Beginner - 10+</li>
-
                 <li>🥈 Skilled - 50+</li>
-
                 <li>🥇 Master - 100+</li>
-
                 <li>💎 Elite - 250+</li>
-
                 <li>👑 Legend - 500+</li>
-
                 <li>🚀 Champion - 1000+</li>
 
             </ul>
@@ -209,7 +244,27 @@
 
             <h3>🏅 Achievements</h3>
 
+            <p id="achievementCount">
+                Total Unlocked: 0
+            </p>
+
             <ul id="achievementList"></ul>
+
+        </div>
+
+        <!-- Achievement History -->
+
+        <div class="card">
+
+            <h3>🏆 Achievement History</h3>
+
+            <ul id="achievementHistory">
+
+                <li>
+                    No achievements unlocked yet.
+                </li>
+
+            </ul>
 
         </div>
 
@@ -229,7 +284,7 @@
 
         </div>
 
-        <!-- History -->
+        <!-- Score History -->
 
         <div class="card">
 
@@ -251,10 +306,12 @@
 
     </div>
 
-    <!-- Popup -->
+    <!-- Achievement Popup -->
 
     <div id="popup" class="popup">
+
         Achievement Unlocked!
+
     </div>
 
     <!-- Footer -->
@@ -262,7 +319,7 @@
     <footer>
 
         <p>
-            Score Tracker v4.3.2
+            Score Tracker v4.4
         </p>
 
         <p>
