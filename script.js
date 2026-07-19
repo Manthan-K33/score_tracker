@@ -23,35 +23,69 @@ const RANKS = [
 ];
 
 let scores =
-    JSON.parse(localStorage.getItem(STORAGE_KEYS.SCORES)) || [];
+    JSON.parse(
+        localStorage.getItem(
+            STORAGE_KEYS.SCORES
+        )
+    ) || [];
 
 let achievements =
-    JSON.parse(localStorage.getItem(STORAGE_KEYS.ACHIEVEMENTS)) || [];
+    JSON.parse(
+        localStorage.getItem(
+            STORAGE_KEYS.ACHIEVEMENTS
+        )
+    ) || [];
 
 let achievementHistory =
-    JSON.parse(localStorage.getItem(STORAGE_KEYS.ACHIEVEMENT_HISTORY)) || [];
+    JSON.parse(
+        localStorage.getItem(
+            STORAGE_KEYS.ACHIEVEMENT_HISTORY
+        )
+    ) || [];
 
 let bestScore =
-    Number(localStorage.getItem(STORAGE_KEYS.BEST_SCORE)) || 0;
+    Number(
+        localStorage.getItem(
+            STORAGE_KEYS.BEST_SCORE
+        )
+    ) || 0;
 
 let lastScore =
-    Number(localStorage.getItem(STORAGE_KEYS.LAST_SCORE)) || 0;
+    Number(
+        localStorage.getItem(
+            STORAGE_KEYS.LAST_SCORE
+        )
+    ) || 0;
 
 let gamesPlayed =
-    Number(localStorage.getItem(STORAGE_KEYS.GAMES_PLAYED)) || 0;
+    Number(
+        localStorage.getItem(
+            STORAGE_KEYS.GAMES_PLAYED
+        )
+    ) || 0;
 
 let streak =
-    Number(localStorage.getItem(STORAGE_KEYS.STREAK)) || 0;
+    Number(
+        localStorage.getItem(
+            STORAGE_KEYS.STREAK
+        )
+    ) || 0;
 
 let bestStreak =
-    Number(localStorage.getItem(STORAGE_KEYS.BEST_STREAK)) || 0;
+    Number(
+        localStorage.getItem(
+            STORAGE_KEYS.BEST_STREAK
+        )
+    ) || 0;
 
 function handleNameEnter(event) {
 
     if (event.key === "Enter") {
 
         document
-            .getElementById("scoreInput")
+            .getElementById(
+                "scoreInput"
+            )
             .focus();
     }
 }
@@ -67,10 +101,14 @@ function handleScoreEnter(event) {
 function saveScore() {
 
     const playerInput =
-        document.getElementById("playerName");
+        document.getElementById(
+            "playerName"
+        );
 
     const scoreInput =
-        document.getElementById("scoreInput");
+        document.getElementById(
+            "scoreInput"
+        );
 
     let player =
         playerInput.value.trim();
@@ -78,12 +116,15 @@ function saveScore() {
     if (player.length > 0) {
 
         player =
-            player.charAt(0).toUpperCase() +
+            player.charAt(0)
+            .toUpperCase() +
             player.slice(1);
     }
 
     let score =
-        Number(scoreInput.value);
+        Number(
+            scoreInput.value
+        );
 
     if (isNaN(score)) {
 
@@ -96,7 +137,8 @@ function saveScore() {
     scores.push({
         player,
         score,
-        date: now.toLocaleString()
+        date:
+            now.toLocaleString()
     });
 
     localStorage.setItem(
@@ -107,11 +149,6 @@ function saveScore() {
     localStorage.setItem(
         STORAGE_KEYS.PLAYER_NAME,
         player
-    );
-
-    localStorage.setItem(
-        STORAGE_KEYS.LAST_SCORE,
-        score
     );
 
     localStorage.setItem(
@@ -176,7 +213,9 @@ function saveScore() {
 
     lastScore = score;
 
-    checkAchievements(score);
+    checkAchievements(
+        score
+    );
 
     refreshUI();
 
@@ -189,24 +228,35 @@ function checkAchievements(score) {
 
         if (
             score >= rank.min &&
-            !achievements.includes(rank.name)
+            !achievements.includes(
+                rank.name
+            )
         ) {
 
-            achievements.push(rank.name);
+            achievements.push(
+                rank.name
+            );
 
             achievementHistory.push({
-                achievement: rank.name,
-                date: new Date().toLocaleString()
+                achievement:
+                    rank.name,
+                date:
+                    new Date()
+                    .toLocaleString()
             });
 
             localStorage.setItem(
                 STORAGE_KEYS.ACHIEVEMENTS,
-                JSON.stringify(achievements)
+                JSON.stringify(
+                    achievements
+                )
             );
 
             localStorage.setItem(
                 STORAGE_KEYS.ACHIEVEMENT_HISTORY,
-                JSON.stringify(achievementHistory)
+                JSON.stringify(
+                    achievementHistory
+                )
             );
 
             showPopup(
@@ -219,16 +269,23 @@ function checkAchievements(score) {
 function showPopup(text) {
 
     const popup =
-        document.getElementById("popup");
+        document.getElementById(
+            "popup"
+        );
 
     popup.textContent =
-        "🏆 Unlocked: " + text;
+        "🏆 Unlocked: " +
+        text;
 
-    popup.classList.add("show");
+    popup.classList.add(
+        "show"
+    );
 
     setTimeout(() => {
 
-        popup.classList.remove("show");
+        popup.classList.remove(
+            "show"
+        );
 
     }, 3000);
 }
@@ -236,13 +293,17 @@ function showPopup(text) {
 function showMessage(text) {
 
     const message =
-        document.getElementById("message");
+        document.getElementById(
+            "message"
+        );
 
-    message.textContent = text;
+    message.textContent =
+        text;
 
     setTimeout(() => {
 
-        message.textContent = "";
+        message.textContent =
+            "";
 
     }, 3000);
 }
@@ -253,8 +314,10 @@ function calculateAverage(arr) {
     }
 
     return (
-        arr.reduce((a, b) => a + b, 0) /
-        arr.length
+        arr.reduce(
+            (a, b) => a + b,
+            0
+        ) / arr.length
     ).toFixed(1);
 }
 
@@ -265,16 +328,24 @@ function calculateMedian(arr) {
     }
 
     const sorted =
-        [...arr].sort((a, b) => a - b);
+        [...arr].sort(
+            (a, b) => a - b
+        );
 
     const middle =
-        Math.floor(sorted.length / 2);
+        Math.floor(
+            sorted.length / 2
+        );
 
-    if (sorted.length % 2 === 0) {
+    if (
+        sorted.length % 2 === 0
+    ) {
 
         return (
-            (sorted[middle - 1] +
-                sorted[middle]) / 2
+            (
+                sorted[middle - 1] +
+                sorted[middle]
+            ) / 2
         ).toFixed(1);
     }
 
@@ -284,21 +355,23 @@ function calculateMedian(arr) {
 function updateStatistics() {
 
     const values =
-        scores.map(item => item.score);
+        scores.map(
+            item => item.score
+        );
 
     document.getElementById(
         "statHighest"
     ).textContent =
-        values.length ?
-        Math.max(...values) :
-        0;
+        values.length
+            ? Math.max(...values)
+            : 0;
 
     document.getElementById(
         "statLowest"
     ).textContent =
-        values.length ?
-        Math.min(...values) :
-        0;
+        values.length
+            ? Math.min(...values)
+            : 0;
 
     document.getElementById(
         "statAverage"
@@ -325,16 +398,42 @@ function updateStatistics() {
 
 function updateAchievementCount() {
 
-    const el =
+    const count =
         document.getElementById(
             "achievementCount"
         );
 
-    if (el) {
+    if (!count) return;
 
-        el.textContent =
-            `Total Unlocked: ${achievements.length}`;
+    count.textContent =
+        `Total Unlocked: ${achievements.length}`;
+}
+
+function renderAchievements() {
+
+    const list =
+        document.getElementById(
+            "achievementList"
+        );
+
+    if (!list) return;
+
+    if (
+        achievements.length === 0
+    ) {
+
+        list.innerHTML =
+            "<li>No achievements unlocked yet.</li>";
+
+        return;
     }
+
+    list.innerHTML =
+        achievements
+        .map(item =>
+            `<li>${item}</li>`
+        )
+        .join("");
 }
 
 function renderAchievementHistory() {
@@ -370,6 +469,74 @@ function renderAchievementHistory() {
         .join("");
 }
 
+function renderLeaderboard() {
+
+    const board =
+        document.getElementById(
+            "leaderboard"
+        );
+
+    if (!board) return;
+
+    if (scores.length === 0) {
+
+        board.innerHTML =
+            `<li>No scores yet. Play your first game!</li>`;
+
+        return;
+    }
+
+    const topScores =
+        [...scores]
+        .sort(
+            (a, b) =>
+                b.score - a.score
+        )
+        .slice(0, 10);
+
+    board.innerHTML =
+        topScores
+        .map(item => `
+            <li>
+                ${item.player}
+                — ${item.score}
+            </li>
+        `)
+        .join("");
+}
+
+function renderHistory() {
+
+    const history =
+        document.getElementById(
+            "historyList"
+        );
+
+    if (!history) return;
+
+    if (scores.length === 0) {
+
+        history.innerHTML =
+            `<li>No score history available.</li>`;
+
+        return;
+    }
+
+    history.innerHTML =
+        scores
+        .slice()
+        .reverse()
+        .map(item => `
+            <li>
+                <strong>${item.player}</strong>
+                - ${item.score}
+                <br>
+                <small>${item.date}</small>
+            </li>
+        `)
+        .join("");
+}
+
 function updatePerformanceRating() {
 
     const rating =
@@ -383,7 +550,8 @@ function updatePerformanceRating() {
         Number(
             calculateAverage(
                 scores.map(
-                    item => item.score
+                    item =>
+                        item.score
                 )
             )
         );
@@ -393,22 +561,30 @@ function updatePerformanceRating() {
         rating.textContent =
             "🚀 Champion Player";
 
-    } else if (average >= 500) {
+    } else if (
+        average >= 500
+    ) {
 
         rating.textContent =
             "👑 Legendary Player";
 
-    } else if (average >= 250) {
+    } else if (
+        average >= 250
+    ) {
 
         rating.textContent =
             "💎 Elite Player";
 
-    } else if (average >= 100) {
+    } else if (
+        average >= 100
+    ) {
 
         rating.textContent =
             "🥇 Master Player";
 
-    } else if (average >= 50) {
+    } else if (
+        average >= 50
+    ) {
 
         rating.textContent =
             "🥈 Skilled Player";
@@ -440,16 +616,24 @@ function updateTrendIndicator() {
     const recent =
         scores
         .slice(-5)
-        .map(item => item.score);
+        .map(
+            item =>
+                item.score
+        );
 
     const previous =
         scores
         .slice(-10, -5)
-        .map(item => item.score);
+        .map(
+            item =>
+                item.score
+        );
 
     const recentAvg =
         Number(
-            calculateAverage(recent)
+            calculateAverage(
+                recent
+            )
         );
 
     const previousAvg =
@@ -461,13 +645,17 @@ function updateTrendIndicator() {
             )
             : recentAvg;
 
-    if (recentAvg > previousAvg) {
+    if (
+        recentAvg >
+        previousAvg
+    ) {
 
         trend.textContent =
             "📈 Improving";
 
     } else if (
-        recentAvg < previousAvg
+        recentAvg <
+        previousAvg
     ) {
 
         trend.textContent =
@@ -479,15 +667,72 @@ function updateTrendIndicator() {
             "➡️ Stable";
     }
 }
+function updateAchievementProgress() {
 
-function updateGoalTracker() {
+    const totalAchievements = RANKS.length;
 
-    const goal =
-        document.getElementById(
-            "goalTracker"
+    const unlocked = achievements.length;
+
+    const percent =
+        Math.round(
+            (unlocked / totalAchievements) * 100
         );
 
-    if (!goal) return;
+    const text =
+        document.getElementById(
+            "achievementProgressText"
+        );
+
+    const progressBar =
+        document.getElementById(
+            "achievementProgressBar"
+        );
+
+    const progressPercent =
+        document.getElementById(
+            "achievementProgressPercent"
+        );
+
+    if (text) {
+        text.textContent =
+            `${unlocked} / ${totalAchievements} Unlocked`;
+    }
+
+    if (progressBar) {
+        progressBar.style.width =
+            `${percent}%`;
+    }
+
+    if (progressPercent) {
+        progressPercent.textContent =
+            `${percent}%`;
+    }
+}
+
+function updateProgressBar() {
+
+    const progressBar =
+        document.getElementById(
+            "progressBar"
+        );
+
+    const progressPercent =
+        document.getElementById(
+            "progressPercent"
+        );
+
+    const nextRankText =
+        document.getElementById(
+            "nextRankText"
+        );
+
+    if (
+        !progressBar ||
+        !progressPercent ||
+        !nextRankText
+    ) {
+        return;
+    }
 
     const nextRank =
         RANKS.find(
@@ -497,110 +742,88 @@ function updateGoalTracker() {
 
     if (!nextRank) {
 
-        goal.textContent =
-            "🏆 Maximum Rank Reached!";
+        progressBar.style.width =
+            "100%";
+
+        progressPercent.textContent =
+            "100%";
+
+        nextRankText.textContent =
+            "🏆 Maximum Rank Reached";
 
         return;
     }
 
-    goal.textContent =
-        `Need ${nextRank.min - bestScore} more points for ${nextRank.name}`;
-}
-
-function drawChart() {
-
-    const canvas =
-        document.getElementById(
-            "scoreChart"
+    const previousRank =
+        [...RANKS]
+        .reverse()
+        .find(
+            rank =>
+                bestScore >= rank.min
         );
 
-    if (!canvas) return;
+    const previousValue =
+        previousRank
+            ? previousRank.min
+            : 0;
 
-    const ctx =
-        canvas.getContext("2d");
+    const progress =
+        (
+            (
+                bestScore -
+                previousValue
+            ) /
+            (
+                nextRank.min -
+                previousValue
+            )
+        ) * 100;
 
-    canvas.width =
-        canvas.offsetWidth;
-
-    canvas.height = 250;
-
-    ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
-
-    if (scores.length < 2) {
-        return;
-    }
-
-    const values =
-        scores.map(
-            item => item.score
+    const safeProgress =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                Math.round(progress)
+            )
         );
 
-    const max =
-        Math.max(...values);
+    progressBar.style.width =
+        `${safeProgress}%`;
 
-    const stepX =
-        canvas.width /
-        (values.length - 1);
+    progressPercent.textContent =
+        `${safeProgress}%`;
 
-    ctx.beginPath();
-
-    values.forEach(
-        (value, index) => {
-
-            const x =
-                index * stepX;
-
-            const y =
-                canvas.height -
-                (
-                    value / max
-                ) *
-                (
-                    canvas.height - 30
-                );
-
-            if (index === 0) {
-
-                ctx.moveTo(x, y);
-
-            } else {
-
-                ctx.lineTo(x, y);
-            }
-        }
-    );
-
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = "#38bdf8";
-    ctx.stroke();
+    nextRankText.textContent =
+        `Reach ${nextRank.min} for ${nextRank.name}`;
 }
 
 function refreshUI() {
 
     document.getElementById(
         "bestScore"
-    ).textContent = bestScore;
+    ).textContent =
+        bestScore;
 
     document.getElementById(
         "lastScore"
-    ).textContent = lastScore;
+    ).textContent =
+        lastScore;
 
     document.getElementById(
         "gamesPlayed"
-    ).textContent = gamesPlayed;
+    ).textContent =
+        gamesPlayed;
 
     document.getElementById(
         "streak"
-    ).textContent = streak;
+    ).textContent =
+        streak;
 
     document.getElementById(
         "bestStreak"
-    ).textContent = bestStreak;
+    ).textContent =
+        bestStreak;
 
     document.getElementById(
         "savedPlayer"
@@ -627,11 +850,31 @@ function refreshUI() {
         ) || "Never";
 
     updateStatistics();
-    updateAchievementCount();
-    renderAchievementHistory();
+
     updatePerformanceRating();
+
     updateTrendIndicator();
+
     updateGoalTracker();
+
+    updateHighestRank();
+
+    updateAchievementCount();
+
+    renderAchievementList();
+
+    renderAchievementHistory();
+
+    renderLeaderboard();
+
+    renderHistory();
+
+    updatePersonalBestChallenge();
+
+    updateProgressBar();
+
+    updateAchievementProgress();
+
     drawChart();
 }
 
@@ -660,6 +903,7 @@ function resetData() {
     }
 
     localStorage.clear();
+
     location.reload();
 }
 
@@ -701,6 +945,14 @@ function exportScores() {
 
 function clearHistory() {
 
+    if (
+        !confirm(
+            "Clear score history?"
+        )
+    ) {
+        return;
+    }
+
     scores = [];
 
     localStorage.setItem(
@@ -726,6 +978,33 @@ function updateClock() {
     }
 }
 
+function loadPlayerName() {
+
+    const savedName =
+        localStorage.getItem(
+            STORAGE_KEYS.PLAYER_NAME
+        );
+
+    if (savedName) {
+
+        document.getElementById(
+            "playerName"
+        ).value =
+            savedName;
+
+        const welcome =
+            document.getElementById(
+                "welcomeMessage"
+            );
+
+        if (welcome) {
+
+            welcome.textContent =
+                `Welcome back, ${savedName} 👋`;
+        }
+    }
+}
+
 if (
     localStorage.getItem(
         STORAGE_KEYS.THEME
@@ -737,10 +1016,18 @@ if (
     );
 }
 
+window.addEventListener(
+    "resize",
+    drawChart
+);
+
 setInterval(
     updateClock,
     1000
 );
 
 updateClock();
+
+loadPlayerName();
+
 refreshUI();
