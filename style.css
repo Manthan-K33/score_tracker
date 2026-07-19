@@ -176,42 +176,6 @@ button:hover {
     font-weight: bold;
 }
 
-/* Achievement Progress */
-
-#achievementProgressBar {
-    width: 0%;
-    height: 100%;
-    background: #facc15;
-    transition: width 0.5s ease;
-}
-
-#achievementProgressText {
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #f8fafc;
-}
-
-#achievementProgressPercent {
-    margin-top: 10px;
-    color: #facc15;
-    font-weight: bold;
-}
-
-/* Personal Best Challenge */
-
-#personalBestValue {
-    color: #22c55e;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-#personalBestChallenge {
-    color: #facc15;
-    font-weight: bold;
-    margin-top: 10px;
-    line-height: 1.5;
-}
-
 /* Lists */
 
 ul,
@@ -335,14 +299,6 @@ body.light-mode .progress-container {
 
 body.light-mode #scoreChart {
     background: #f8fafc;
-}
-
-body.light-mode #achievementProgressText {
-    color: #0f172a;
-}
-
-body.light-mode #personalBestChallenge {
-    color: #ca8a04;
 }
 
 /* Animations */
